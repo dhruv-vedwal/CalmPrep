@@ -84,7 +84,7 @@ export default function LandingPage() {
             desc="4-7-8, Box breathing, and Belly breathing with animated SVG visuals and cycle counter." />
           <FeatureCard icon={<MessageSquare className="w-5 h-5 text-sky-deep" />} bg="bg-sky"
             title="AI Wellness Chat"
-            desc="Powered by Gemini 1.5 Flash. Get personalized coping strategies, affirmations, and study tips." />
+            desc="Powered by Gemini 2.5 Flash. Get personalized coping strategies, affirmations, and study tips." />
           <FeatureCard icon={<BarChart2 className="w-5 h-5 text-peach-deep" />} bg="bg-peach"
             title="Progress Analytics"
             desc="Track mood trends, energy levels, stress patterns, and your all-time best/worst days." />

@@ -38,7 +38,7 @@ export async function POST(req: Request) {
     });
 
     const result = await streamText({
-      model: google("models/gemini-1.5-flash"),
+      model: google("gemini-2.5-flash"),
       system: `You are MindEase AI, a compassionate mental wellness assistant specifically designed for Indian students preparing for competitive exams like NEET, JEE, UPSC, CAT, GATE, and board exams.
 
 Your role:

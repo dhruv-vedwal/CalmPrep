@@ -77,7 +77,7 @@ export default function ChatPage() {
               </div>
             </div>
             <div className="text-[11px] text-textMuted text-right hidden md:block">
-              Powered by Gemini 1.5 Flash<br />
+              Powered by Gemini 2.5 Flash<br />
               <span className="text-[10px]">Not a replacement for professional help</span>
             </div>
           </div>
