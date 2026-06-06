@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { BookOpen, ExternalLink, Phone, Youtube, FileText, Heart, Brain, Moon, Dumbbell, Wind } from "lucide-react";
+import ClinicalScreener from "@/components/ClinicalScreener";
 
 export const metadata: Metadata = {
   title: "Resources — MindEase",
@@ -101,7 +102,7 @@ export default function ResourcesPage() {
       </div>
 
       {/* Quick access helplines bar */}
-      <div className="bg-peach rounded-[16px] border border-peach-mid p-4 mb-8 flex flex-wrap gap-3 items-center">
+      <div className="bg-peach rounded-[16px] border border-peach-mid p-4 mb-6 flex flex-wrap gap-3 items-center">
         <div className="flex items-center gap-2">
           <Phone className="w-4 h-4 text-peach-deep" aria-hidden="true" />
           <span className="text-sm font-semibold text-peach-text">Need help now?</span>
@@ -120,6 +121,10 @@ export default function ResourcesPage() {
             <Phone className="w-3 h-3" aria-hidden="true" /> {h.name} · {h.tel}
           </a>
         ))}
+      </div>
+
+      <div className="mb-10">
+        <ClinicalScreener />
       </div>
 
       {/* Categories */}
