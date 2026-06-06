@@ -1,7 +1,7 @@
 import { auth } from "@/lib/auth";
 import { NextResponse } from "next/server";
 
-export default auth((req) => {
+export default auth((req: any) => {
   const isAuthPage = req.nextUrl.pathname.startsWith('/auth');
   const isPublic = req.nextUrl.pathname === '/' || isAuthPage;
 

@@ -1,6 +1,17 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import {
+  LayoutDashboard,
+  ClipboardCheck,
+  BookOpen,
+  Wind,
+  MessageSquare,
+  BarChart2,
+  Bell,
+  Settings,
+  Heart,
+} from "lucide-react";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -8,36 +19,41 @@ export default function Navbar() {
   if (pathname === "/auth") return null;
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-[100] h-[64px] bg-[rgba(248,246,242,0.88)] backdrop-blur-[12px] border-b border-borderLight flex items-center justify-between px-4 md:px-8">
+    <nav className="fixed top-0 left-0 right-0 z-[100] h-[64px] bg-[rgba(248,246,242,0.92)] backdrop-blur-[16px] border-b border-borderLight flex items-center justify-between px-4 md:px-8 shadow-[0_1px_0_0_var(--border)]">
       <Link href="/" className="flex items-center gap-2.5 text-lg font-semibold text-lavender-text no-underline">
         <span className="w-8 h-8 rounded-xl bg-lavender flex items-center justify-center">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#7C6BC4" strokeWidth="2" strokeLinecap="round" className="w-[18px] h-[18px]">
-            <path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/>
-          </svg>
+          <Heart className="w-[17px] h-[17px] text-lavender-deep" strokeWidth={2.5} />
         </span>
         MindEase
       </Link>
-      <div className="hidden md:flex items-center gap-1">
-        <NavLink href="/dashboard" current={pathname}>Dashboard</NavLink>
-        <NavLink href="/checkin" current={pathname}>Check-in</NavLink>
-        <NavLink href="/journal" current={pathname}>Journal</NavLink>
-        <NavLink href="/breathe" current={pathname}>Breathe</NavLink>
-        <NavLink href="/chat" current={pathname}>AI Support</NavLink>
-        <NavLink href="/progress" current={pathname}>Progress</NavLink>
+
+      <div className="hidden md:flex items-center gap-0.5">
+        <NavLink href="/dashboard" current={pathname} icon={<LayoutDashboard className="w-4 h-4" />}>Dashboard</NavLink>
+        <NavLink href="/checkin" current={pathname} icon={<ClipboardCheck className="w-4 h-4" />}>Check-in</NavLink>
+        <NavLink href="/journal" current={pathname} icon={<BookOpen className="w-4 h-4" />}>Journal</NavLink>
+        <NavLink href="/breathe" current={pathname} icon={<Wind className="w-4 h-4" />}>Breathe</NavLink>
+        <NavLink href="/chat" current={pathname} icon={<MessageSquare className="w-4 h-4" />}>AI Support</NavLink>
+        <NavLink href="/progress" current={pathname} icon={<BarChart2 className="w-4 h-4" />}>Progress</NavLink>
       </div>
-      <div className="flex items-center gap-2.5">
-        <Link href="/settings" className="w-[34px] h-[34px] rounded-full bg-gradient-to-br from-lavender-mid to-lavender-deep flex items-center justify-center text-[13px] font-semibold text-white cursor-pointer no-underline">
-          AR
+
+      <div className="flex items-center gap-2">
+        <button className="w-[34px] h-[34px] rounded-full hover:bg-lavender flex items-center justify-center transition-colors relative">
+          <Bell className="w-[17px] h-[17px] text-textSecondary" />
+          <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-lavender-deep"></span>
+        </button>
+        <Link href="/profile" className="w-[34px] h-[34px] rounded-full bg-gradient-to-br from-lavender-mid to-lavender-deep flex items-center justify-center text-[13px] font-semibold text-white cursor-pointer no-underline hover:opacity-90 transition-opacity">
+          A
         </Link>
       </div>
     </nav>
   );
 }
 
-function NavLink({ href, current, children }: { href: string, current: string, children: React.ReactNode }) {
+function NavLink({ href, current, icon, children }: { href: string, current: string, icon: React.ReactNode, children: React.ReactNode }) {
   const isActive = current === href || (href !== "/" && current.startsWith(href));
   return (
-    <Link href={href} className={`px-3.5 py-[7px] rounded-[10px] text-sm font-normal no-underline cursor-pointer transition-colors border-none bg-transparent ${isActive ? 'bg-lavender text-lavender-text font-medium' : 'text-textSecondary hover:bg-lavender hover:text-lavender-text'}`}>
+    <Link href={href} className={`inline-flex items-center gap-1.5 px-3 py-[7px] rounded-[10px] text-[13px] font-medium no-underline transition-colors ${isActive ? 'bg-lavender text-lavender-text' : 'text-textSecondary hover:bg-lavender/60 hover:text-lavender-text'}`}>
+      {icon}
       {children}
     </Link>
   );

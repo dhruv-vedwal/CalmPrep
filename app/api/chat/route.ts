@@ -5,14 +5,15 @@ import { db } from "@/lib/db";
 
 export async function POST(req: Request) {
   const session = await auth();
-  if (!session?.user?.id) return new Response("Unauthorized", { status: 401 });
+  const userId = session?.user?.id;
+  if (!userId) return new Response("Unauthorized", { status: 401 });
 
   const { messages } = await req.json();
 
   const userMessage = messages[messages.length - 1];
   await db.chatMessage.create({
     data: {
-      userId: session.user.id,
+      userId,
       role: "user",
       content: userMessage.content,
     }
@@ -26,7 +27,7 @@ export async function POST(req: Request) {
       if (text) {
         await db.chatMessage.create({
           data: {
-            userId: session.user.id,
+            userId,
             role: "assistant",
             content: text,
           }
