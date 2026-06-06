@@ -9,11 +9,11 @@ export default auth((req: any) => {
   const isPublic = req.nextUrl.pathname === '/' || isAuthPage;
 
   if (!req.auth && !isPublic) {
-    return NextResponse.redirect(new URL('/auth', req.nextUrl));
+    return NextResponse.redirect(new URL('/auth', req.url));
   }
 
   if (isAuthPage && req.auth) {
-    return NextResponse.redirect(new URL('/dashboard', req.nextUrl));
+    return NextResponse.redirect(new URL('/dashboard', req.url));
   }
 });
 

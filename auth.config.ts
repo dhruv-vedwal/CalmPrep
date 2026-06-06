@@ -1,7 +1,7 @@
 import type { NextAuthConfig } from "next-auth";
 
 export const authConfig = {
-  secret: process.env.NEXTAUTH_SECRET || process.env.AUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET || process.env.AUTH_SECRET || "default_fallback_secret_for_development_and_builds_32char_minimum_length",
   trustHost: true,
   providers: [], // Added in full auth.ts configuration
   callbacks: {
