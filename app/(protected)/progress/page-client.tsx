@@ -2,6 +2,7 @@ import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 import ProgressChart from "@/components/ProgressChart";
+import { calculateStreak } from "@/lib/utils";
 import { BarChart2, TrendingUp, Flame, Calendar, Tag, Target } from "lucide-react";
 
 const moodLabels: Record<number, string> = { 1: "Terrible", 2: "Low", 3: "Okay", 4: "Good", 5: "Great" };
@@ -40,14 +41,7 @@ export default async function ProgressPage() {
     : "—";
 
   // Streak
-  let streak = 0;
-  const now = new Date();
-  for (let i = entries.length - 1; i >= 0; i--) {
-    const d = new Date(entries[i].createdAt);
-    const diff = Math.floor((now.getTime() - d.getTime()) / (1000 * 60 * 60 * 24));
-    if (diff === streak) streak++;
-    else break;
-  }
+  const streak = calculateStreak(entries);
 
   // Trigger counts
   const allTriggers: string[] = [];
@@ -59,11 +53,21 @@ export default async function ProgressPage() {
   const topTriggers = Object.entries(triggerCounts).sort((a, b) => b[1] - a[1]).slice(0, 6);
 
   // Mood distribution
-  const moodDist = [5, 4, 3, 2, 1].map(score => ({
-    score,
-    count: entries.filter(e => e.mood === score).length,
-    pct: entries.length > 0 ? Math.round((entries.filter(e => e.mood === score).length / entries.length) * 100) : 0,
-  }));
+  const moodCounts: Record<number, number> = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+  entries.forEach((e) => {
+    if (moodCounts[e.mood] !== undefined) {
+      moodCounts[e.mood]++;
+    }
+  });
+
+  const moodDist = [5, 4, 3, 2, 1].map(score => {
+    const count = moodCounts[score] || 0;
+    return {
+      score,
+      count,
+      pct: entries.length > 0 ? Math.round((count / entries.length) * 100) : 0,
+    };
+  });
 
   const moodBarColors: Record<number, string> = {
     1: "bg-peach-deep", 2: "bg-peach-mid", 3: "bg-lavender-mid", 4: "bg-sage-mid", 5: "bg-sage-deep"

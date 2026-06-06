@@ -38,16 +38,40 @@ export function safeJsonParse<T>(json: string, fallback: T): T {
  */
 export function calculateStreak(entries: { createdAt: Date | string }[]): number {
   if (entries.length === 0) return 0;
-  let streak = 0;
-  const now = new Date();
-  for (let i = 0; i < entries.length; i++) {
-    const entryDate = new Date(entries[i].createdAt);
-    const diffDays = Math.floor(
-      (now.getTime() - entryDate.getTime()) / (1000 * 60 * 60 * 24)
-    );
-    if (diffDays === i) streak++;
-    else break;
+  
+  // Get unique local dates (YYYY-MM-DD)
+  const uniqueDates = Array.from(new Set(
+    entries.map(e => new Date(e.createdAt).toLocaleDateString("en-CA"))
+  )).sort((a, b) => b.localeCompare(a)); // Newest first
+
+  if (uniqueDates.length === 0) return 0;
+
+  const todayStr = new Date().toLocaleDateString("en-CA");
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  const yesterdayStr = yesterday.toLocaleDateString("en-CA");
+
+  const newestDate = uniqueDates[0];
+  
+  // If the newest check-in is not today and not yesterday, the streak is broken
+  if (newestDate !== todayStr && newestDate !== yesterdayStr) {
+    return 0;
   }
+
+  let streak = 1;
+  for (let i = 0; i < uniqueDates.length - 1; i++) {
+    const current = new Date(uniqueDates[i]);
+    const next = new Date(uniqueDates[i + 1]);
+    const diffTime = current.getTime() - next.getTime();
+    const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays === 1) {
+      streak++;
+    } else if (diffDays > 1) {
+      break; // Gap detected, stop counting
+    }
+  }
+  
   return streak;
 }
 

@@ -90,7 +90,7 @@ export default function BreathePage() {
     }, 1000);
 
     return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
-  }, [active, phaseIndex, selectedTechnique]);
+  }, [active, phaseIndex, selectedTechnique, currentPhase.duration]);
 
   const reset = () => {
     setActive(false);

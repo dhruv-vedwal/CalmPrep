@@ -41,12 +41,14 @@ export default async function Dashboard() {
 
   const streak = calculateStreak(moodEntries);
 
+  const moodEntriesByDate = new Map(
+    moodEntries.map((e) => [new Date(e.createdAt).toDateString(), e])
+  );
+
   const weekData = Array.from({ length: 7 }, (_, i) => {
     const d = new Date();
     d.setDate(d.getDate() - (6 - i));
-    const entry = moodEntries.find(
-      (e) => new Date(e.createdAt).toDateString() === d.toDateString()
-    );
+    const entry = moodEntriesByDate.get(d.toDateString());
     return {
       day: d.toLocaleDateString("en-US", { weekday: "short" }),
       mood: entry?.mood ?? null,

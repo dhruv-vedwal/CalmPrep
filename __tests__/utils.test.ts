@@ -34,6 +34,14 @@ describe("calculateStreak", () => {
   it("returns 0 if most recent entry is from 2 days ago (missed yesterday)", () => {
     expect(calculateStreak([daysAgo(2), daysAgo(3)])).toBe(0);
   });
+
+  it("handles duplicate check-ins on the same day without breaking streak", () => {
+    expect(calculateStreak([daysAgo(0), daysAgo(0), daysAgo(1), daysAgo(1), daysAgo(2)])).toBe(3);
+  });
+
+  it("handles a streak starting yesterday (no check-in today yet)", () => {
+    expect(calculateStreak([daysAgo(1), daysAgo(2), daysAgo(3)])).toBe(3);
+  });
 });
 
 describe("calculateAvgMood", () => {

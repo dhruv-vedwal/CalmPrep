@@ -32,6 +32,13 @@ export default async function JournalPage() {
     ? (entries.reduce((acc, e) => acc + e.mood, 0) / entries.length).toFixed(1)
     : "—";
 
+  const moodCounts: Record<number, number> = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+  entries.forEach((e) => {
+    if (moodCounts[e.mood] !== undefined) {
+      moodCounts[e.mood]++;
+    }
+  });
+
   return (
     <div className="max-w-[1100px] mx-auto px-4 md:px-6 pb-12">
       {/* Header */}
@@ -165,7 +172,7 @@ export default async function JournalPage() {
               <h3 className="text-sm font-semibold text-textPrimary mb-3">Mood Distribution</h3>
               <div className="space-y-2">
                 {[5, 4, 3, 2, 1].map(score => {
-                  const count = entries.filter(e => e.mood === score).length;
+                  const count = moodCounts[score] || 0;
                   const pct = entries.length > 0 ? (count / entries.length) * 100 : 0;
                   return (
                     <div key={score} className="flex items-center gap-2">
