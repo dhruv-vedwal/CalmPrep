@@ -1,0 +1,1884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MindEase — Mental Wellness for Indian Students</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --lavender: #EDE8F8;
+    --lavender-mid: #C8BEF0;
+    --lavender-deep: #7C6BC4;
+    --lavender-text: #3D2F8A;
+    --sage: #D6EDD6;
+    --sage-mid: #A8D4A8;
+    --sage-deep: #4A8F5A;
+    --sage-text: #1E4D28;
+    --peach: #FDEBD7;
+    --peach-mid: #F8C99B;
+    --peach-deep: #D4742A;
+    --peach-text: #7A3A0E;
+    --sky: #DCF0FA;
+    --sky-mid: #9ED4EF;
+    --sky-deep: #2E88BD;
+    --white: #FFFFFF;
+    --off-white: #F8F6F2;
+    --text-primary: #1A1523;
+    --text-secondary: #5C536E;
+    --text-muted: #9B93AD;
+    --border: rgba(90,70,130,0.12);
+    --border-med: rgba(90,70,130,0.22);
+    --card-radius: 20px;
+    --btn-radius: 12px;
+    --font-body: 'DM Sans', sans-serif;
+    --font-serif: 'Lora', serif;
+    --nav-h: 64px;
+    --transition: 0.2s ease;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--off-white);
+    color: var(--text-primary);
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ── NAVIGATION ── */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: var(--nav-h);
+    background: rgba(248,246,242,0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 18px; font-weight: 600; color: var(--lavender-text);
+    text-decoration: none;
+  }
+  .nav-logo-icon {
+    width: 32px; height: 32px; border-radius: 10px;
+    background: var(--lavender); display: flex; align-items: center; justify-content: center;
+  }
+  .nav-logo-icon svg { width: 18px; height: 18px; }
+  .nav-links { display: flex; align-items: center; gap: 4px; }
+  .nav-link {
+    padding: 7px 14px; border-radius: 10px; font-size: 14px; font-weight: 400;
+    color: var(--text-secondary); text-decoration: none; cursor: pointer;
+    transition: var(--transition); border: none; background: none;
+  }
+  .nav-link:hover, .nav-link.active {
+    background: var(--lavender); color: var(--lavender-text);
+  }
+  .nav-avatar {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--lavender-mid), var(--lavender-deep));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 600; color: var(--white); cursor: pointer;
+  }
+
+  /* ── PAGE SYSTEM ── */
+  .pages { padding-top: var(--nav-h); }
+  .page { display: none; min-height: calc(100vh - var(--nav-h)); }
+  .page.active { display: block; }
+
+  /* ── SHARED COMPONENTS ── */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+  .section { padding: 3rem 0; }
+
+  .card {
+    background: var(--white);
+    border-radius: var(--card-radius);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+  }
+  .card-sm { padding: 1.1rem 1.25rem; border-radius: 16px; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 20px; border-radius: var(--btn-radius);
+    font-family: var(--font-body); font-size: 14px; font-weight: 500;
+    cursor: pointer; border: none; transition: var(--transition); text-decoration: none;
+  }
+  .btn-primary {
+    background: var(--lavender-deep); color: var(--white);
+  }
+  .btn-primary:hover { background: var(--lavender-text); }
+  .btn-soft {
+    background: var(--lavender); color: var(--lavender-text);
+  }
+  .btn-soft:hover { background: var(--lavender-mid); }
+  .btn-outline {
+    background: transparent; color: var(--text-secondary);
+    border: 1px solid var(--border-med);
+  }
+  .btn-outline:hover { background: var(--off-white); }
+  .btn-lg { padding: 13px 28px; font-size: 15px; border-radius: 14px; }
+  .btn-icon { padding: 9px; }
+
+  .badge {
+    display: inline-flex; align-items: center;
+    padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 500;
+  }
+  .badge-lavender { background: var(--lavender); color: var(--lavender-text); }
+  .badge-sage { background: var(--sage); color: var(--sage-text); }
+  .badge-peach { background: var(--peach); color: var(--peach-text); }
+  .badge-sky { background: var(--sky); color: var(--sky-deep); }
+
+  .section-title {
+    font-size: 22px; font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem;
+  }
+  .section-sub {
+    font-size: 14px; color: var(--text-muted);
+  }
+
+  input[type="text"], input[type="email"], input[type="password"],
+  select, textarea {
+    width: 100%; padding: 11px 14px; border-radius: 12px;
+    border: 1px solid var(--border-med); background: var(--white);
+    font-family: var(--font-body); font-size: 14px; color: var(--text-primary);
+    outline: none; transition: var(--transition);
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--lavender-deep);
+    box-shadow: 0 0 0 3px rgba(124,107,196,0.15);
+  }
+  label {
+    display: block; font-size: 13px; font-weight: 500;
+    color: var(--text-secondary); margin-bottom: 6px;
+  }
+  .form-group { margin-bottom: 1.1rem; }
+
+  /* ── MOBILE NAV ── */
+  .mobile-nav {
+    display: none;
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(248,246,242,0.95); backdrop-filter: blur(12px);
+    border-top: 1px solid var(--border);
+    padding: 8px 0 max(8px, env(safe-area-inset-bottom));
+  }
+  .mobile-nav-inner { display: flex; justify-content: space-around; }
+  .mobile-nav-btn {
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    padding: 6px 10px; border-radius: 10px; border: none; background: none;
+    font-size: 10px; color: var(--text-muted); cursor: pointer; transition: var(--transition);
+  }
+  .mobile-nav-btn.active { color: var(--lavender-deep); }
+  .mobile-nav-btn svg { width: 22px; height: 22px; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .mobile-nav { display: block; }
+    .pages { padding-bottom: 70px; }
+    .container { padding: 0 1rem; }
+  }
+
+  /* ═══════════════════════════════════════
+     PAGE 1: LANDING
+  ═══════════════════════════════════════ */
+  .landing-hero {
+    min-height: calc(100vh - var(--nav-h));
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; padding: 4rem 1.5rem;
+    background:
+      radial-gradient(ellipse 60% 50% at 20% 30%, rgba(200,190,240,0.25) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 80% 70%, rgba(166,212,166,0.2) 0%, transparent 60%),
+      var(--off-white);
+  }
+  .hero-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 5px 16px; border-radius: 20px;
+    background: var(--lavender); color: var(--lavender-text);
+    font-size: 13px; font-weight: 500; margin-bottom: 1.5rem;
+  }
+  .hero-title {
+    font-family: var(--font-serif);
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    font-weight: 400; line-height: 1.2;
+    color: var(--text-primary); margin-bottom: 1.25rem;
+  }
+  .hero-title em { color: var(--lavender-deep); font-style: italic; }
+  .hero-desc {
+    font-size: 17px; color: var(--text-secondary); max-width: 520px;
+    margin: 0 auto 2rem; line-height: 1.7;
+  }
+  .hero-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem; }
+  .hero-exams {
+    display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+    max-width: 560px; margin: 0 auto;
+  }
+  .exam-chip {
+    padding: 5px 14px; border-radius: 20px; font-size: 13px; font-weight: 500;
+    border: 1px solid var(--border-med); color: var(--text-secondary); background: var(--white);
+  }
+
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+  .feature-card {
+    padding: 1.5rem; border-radius: var(--card-radius);
+    border: 1px solid var(--border); background: var(--white);
+  }
+  .feature-icon {
+    width: 44px; height: 44px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1rem;
+  }
+  .feature-icon svg { width: 22px; height: 22px; }
+  .feature-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 0.4rem; }
+  .feature-card p { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+
+  .crisis-banner {
+    background: var(--peach); border-radius: 16px;
+    padding: 1rem 1.5rem;
+    display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+    border: 1px solid rgba(212, 116, 42, 0.2);
+  }
+  .crisis-banner-icon { font-size: 24px; flex-shrink: 0; }
+  .crisis-banner-text { flex: 1; min-width: 200px; }
+  .crisis-banner-text strong { display: block; font-size: 14px; color: var(--peach-text); }
+  .crisis-banner-text span { font-size: 13px; color: var(--text-secondary); }
+  .crisis-links { display: flex; gap: 8px; flex-wrap: wrap; }
+  .crisis-link {
+    padding: 5px 12px; border-radius: 8px; font-size: 12px; font-weight: 600;
+    background: rgba(212,116,42,0.12); color: var(--peach-text); text-decoration: none;
+    border: 1px solid rgba(212,116,42,0.2);
+  }
+
+  .quotes-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  .quote-card {
+    background: var(--white); border-radius: 16px; border: 1px solid var(--border);
+    padding: 1.25rem;
+  }
+  .quote-text {
+    font-family: var(--font-serif); font-size: 15px; font-style: italic;
+    color: var(--text-primary); margin-bottom: 1rem; line-height: 1.6;
+  }
+  .quote-author { display: flex; align-items: center; gap: 10px; }
+  .quote-avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600; color: var(--white);
+  }
+  .quote-meta strong { display: block; font-size: 13px; font-weight: 600; }
+  .quote-meta span { font-size: 11px; color: var(--text-muted); }
+
+  /* ═══════════════════════════════════════
+     PAGE 2: AUTH
+  ═══════════════════════════════════════ */
+  .auth-page {
+    min-height: calc(100vh - var(--nav-h));
+    display: flex; align-items: center; justify-content: center;
+    padding: 2rem 1rem;
+    background:
+      radial-gradient(ellipse 50% 60% at 80% 20%, rgba(200,190,240,0.3) 0%, transparent 55%),
+      var(--off-white);
+  }
+  .auth-card {
+    width: 100%; max-width: 420px;
+    background: var(--white); border-radius: 24px;
+    border: 1px solid var(--border); padding: 2.25rem;
+  }
+  .auth-logo { text-align: center; margin-bottom: 1.75rem; }
+  .auth-logo .nav-logo { justify-content: center; display: inline-flex; }
+  .auth-tabs {
+    display: flex; background: var(--off-white); border-radius: 12px;
+    padding: 4px; margin-bottom: 1.5rem; gap: 4px;
+  }
+  .auth-tab {
+    flex: 1; padding: 8px; border-radius: 9px; text-align: center;
+    font-size: 14px; font-weight: 500; cursor: pointer; border: none; background: none;
+    color: var(--text-muted); transition: var(--transition);
+  }
+  .auth-tab.active { background: var(--white); color: var(--text-primary); }
+  .auth-divider {
+    display: flex; align-items: center; gap: 12px;
+    margin: 1.25rem 0; font-size: 12px; color: var(--text-muted);
+  }
+  .auth-divider::before, .auth-divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+  .exam-select-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 6px;
+  }
+  .exam-select-btn {
+    padding: 8px 6px; border-radius: 10px; font-size: 12px; font-weight: 500;
+    border: 1px solid var(--border-med); background: var(--white);
+    color: var(--text-secondary); cursor: pointer; text-align: center;
+    transition: var(--transition);
+  }
+  .exam-select-btn.selected {
+    background: var(--lavender); border-color: var(--lavender-mid);
+    color: var(--lavender-text);
+  }
+  .checkbox-row {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px; color: var(--text-secondary); margin-bottom: 1rem;
+  }
+  .checkbox-row input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--lavender-deep); }
+
+  /* ═══════════════════════════════════════
+     PAGE 3: DASHBOARD
+  ═══════════════════════════════════════ */
+  .dashboard-header {
+    padding: 2rem 0 1rem;
+  }
+  .dash-greeting { font-size: 24px; font-weight: 600; }
+  .dash-greeting span { color: var(--lavender-deep); }
+  .dash-sub { font-size: 14px; color: var(--text-muted); margin-top: 2px; }
+
+  .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-bottom: 1.5rem; }
+  .stat-card {
+    background: var(--white); border-radius: 16px; border: 1px solid var(--border);
+    padding: 1.1rem 1.25rem;
+  }
+  .stat-label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+  .stat-value { font-size: 26px; font-weight: 600; color: var(--text-primary); line-height: 1; }
+  .stat-sub { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+  .stat-icon { float: right; margin-top: -2px; }
+
+  .dash-grid { display: grid; grid-template-columns: 1fr 340px; gap: 20px; }
+  @media (max-width: 900px) { .dash-grid { grid-template-columns: 1fr; } }
+
+  .mood-mini-chart {
+    display: flex; align-items: flex-end; gap: 6px; height: 80px; margin-top: 1rem;
+  }
+  .mood-bar {
+    flex: 1; border-radius: 6px 6px 0 0; min-height: 12px;
+  }
+  .mood-bar-labels { display: flex; gap: 6px; margin-top: 4px; }
+  .mood-bar-label { flex: 1; text-align: center; font-size: 10px; color: var(--text-muted); }
+
+  .checkin-prompt {
+    background: linear-gradient(135deg, var(--lavender) 0%, rgba(237,235,254,0.4) 100%);
+    border-radius: 18px; border: 1px solid var(--lavender-mid);
+    padding: 1.5rem;
+  }
+  .checkin-prompt h3 { font-size: 16px; font-weight: 600; margin-bottom: 0.5rem; }
+  .checkin-prompt p { font-size: 13px; color: var(--text-secondary); margin-bottom: 1rem; }
+
+  .streak-row { display: flex; gap: 6px; flex-wrap: wrap; }
+  .streak-dot {
+    width: 28px; height: 28px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 500;
+  }
+  .streak-dot.done { background: var(--sage); color: var(--sage-text); }
+  .streak-dot.today { background: var(--lavender-deep); color: var(--white); }
+  .streak-dot.empty { background: var(--off-white); color: var(--text-muted); border: 1px solid var(--border); }
+
+  .tip-card {
+    background: var(--sage); border-radius: 16px;
+    border: 1px solid var(--sage-mid); padding: 1.25rem;
+  }
+  .tip-card .tip-label { font-size: 11px; font-weight: 600; color: var(--sage-text); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem; }
+  .tip-card p { font-size: 14px; color: var(--sage-text); line-height: 1.55; }
+  .tip-card cite { display: block; font-size: 12px; color: var(--sage-deep); margin-top: 8px; font-style: normal; }
+
+  /* ═══════════════════════════════════════
+     PAGE 4: CHECK-IN
+  ═══════════════════════════════════════ */
+  .checkin-page { max-width: 640px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+  .checkin-step { margin-bottom: 2rem; }
+  .step-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--lavender); color: var(--lavender-text);
+    font-size: 12px; font-weight: 600; margin-bottom: 0.75rem;
+  }
+  .checkin-step h2 { font-size: 20px; font-weight: 600; margin-bottom: 0.4rem; }
+  .checkin-step p { font-size: 14px; color: var(--text-muted); margin-bottom: 1.25rem; }
+
+  .mood-scale { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .mood-btn {
+    width: 72px; height: 72px; border-radius: 18px;
+    border: 2px solid var(--border); background: var(--white);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 4px; cursor: pointer; transition: var(--transition);
+  }
+  .mood-btn .emoji { font-size: 28px; }
+  .mood-btn .mood-name { font-size: 10px; color: var(--text-muted); font-weight: 500; }
+  .mood-btn.selected {
+    border-color: var(--lavender-deep); background: var(--lavender);
+    transform: scale(1.08);
+  }
+  .mood-btn.selected .mood-name { color: var(--lavender-text); }
+
+  .trigger-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+  .trigger-btn {
+    padding: 7px 14px; border-radius: 20px; font-size: 13px;
+    border: 1px solid var(--border-med); background: var(--white);
+    color: var(--text-secondary); cursor: pointer; transition: var(--transition);
+  }
+  .trigger-btn.selected {
+    background: var(--lavender); border-color: var(--lavender-mid);
+    color: var(--lavender-text);
+  }
+
+  .checkin-progress { display: flex; gap: 6px; margin-bottom: 2rem; }
+  .checkin-progress-dot {
+    height: 4px; flex: 1; border-radius: 4px;
+    background: var(--border);
+  }
+  .checkin-progress-dot.done { background: var(--lavender-deep); }
+  .checkin-progress-dot.active { background: var(--lavender-mid); }
+
+  /* ═══════════════════════════════════════
+     PAGE 5: JOURNAL
+  ═══════════════════════════════════════ */
+  .journal-layout { display: grid; grid-template-columns: 1fr 300px; gap: 20px; padding: 2rem 0; }
+  @media (max-width: 800px) { .journal-layout { grid-template-columns: 1fr; } }
+
+  .journal-entry {
+    background: var(--white); border-radius: 16px; border: 1px solid var(--border);
+    padding: 1.25rem; margin-bottom: 12px; cursor: pointer; transition: var(--transition);
+  }
+  .journal-entry:hover { border-color: var(--lavender-mid); }
+  .journal-entry-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .journal-mood-dot {
+    width: 32px; height: 32px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center; font-size: 18px;
+  }
+  .journal-meta strong { display: block; font-size: 14px; font-weight: 500; }
+  .journal-meta span { font-size: 12px; color: var(--text-muted); }
+  .journal-entry p { font-size: 13px; color: var(--text-secondary); line-height: 1.55; }
+  .journal-entry-tags { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+
+  /* ═══════════════════════════════════════
+     PAGE 6: BREATHE
+  ═══════════════════════════════════════ */
+  .breathe-page {
+    min-height: calc(100vh - var(--nav-h));
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 2rem;
+    background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(200,190,240,0.2) 0%, var(--off-white) 70%);
+  }
+  .breathe-circle-wrap { position: relative; width: 240px; height: 240px; margin: 2rem auto; }
+  .breathe-ring-outer {
+    position: absolute; inset: 0; border-radius: 50%;
+    border: 2px solid var(--lavender-mid);
+    animation: ring-pulse 8s ease-in-out infinite;
+  }
+  .breathe-ring-inner {
+    position: absolute; inset: 20px; border-radius: 50%;
+    background: var(--lavender);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    animation: breathe-anim 8s ease-in-out infinite;
+  }
+  .breathe-phase { font-size: 20px; font-weight: 600; color: var(--lavender-text); }
+  .breathe-count { font-size: 40px; font-weight: 300; color: var(--lavender-deep); line-height: 1; margin-top: 4px; }
+  @keyframes breathe-anim {
+    0%, 100% { transform: scale(1); background: var(--lavender); }
+    25% { transform: scale(1.18); background: rgba(200,190,240,0.6); }
+    62.5% { transform: scale(1.18); background: rgba(200,190,240,0.6); }
+    75% { transform: scale(0.92); background: rgba(200,190,240,0.3); }
+  }
+  @keyframes ring-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    25% { transform: scale(1.12); opacity: 1; }
+    62.5% { transform: scale(1.12); opacity: 1; }
+    75% { transform: scale(0.96); opacity: 0.4; }
+  }
+
+  .breathe-controls { display: flex; gap: 12px; }
+  .technique-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; max-width: 700px; width: 100%; margin-top: 2rem; }
+  .technique-card {
+    background: var(--white); border-radius: 16px; border: 1px solid var(--border);
+    padding: 1.1rem; text-align: center; cursor: pointer; transition: var(--transition);
+  }
+  .technique-card:hover, .technique-card.active {
+    border-color: var(--lavender-mid); background: var(--lavender);
+  }
+  .technique-card h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .technique-card p { font-size: 12px; color: var(--text-muted); }
+  .technique-card.active p { color: var(--lavender-text); }
+
+  /* ═══════════════════════════════════════
+     PAGE 7: AI CHAT
+  ═══════════════════════════════════════ */
+  .chat-layout {
+    display: grid; grid-template-columns: 240px 1fr; gap: 20px;
+    padding: 1.5rem 0; height: calc(100vh - var(--nav-h) - 70px);
+  }
+  @media (max-width: 800px) { .chat-layout { grid-template-columns: 1fr; height: auto; } }
+
+  .chat-sidebar {
+    background: var(--white); border-radius: var(--card-radius);
+    border: 1px solid var(--border); padding: 1rem; overflow-y: auto;
+  }
+  .chat-sidebar h3 { font-size: 13px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; }
+  .chat-prompt-btn {
+    width: 100%; text-align: left; padding: 9px 12px; border-radius: 10px;
+    border: none; background: none; font-size: 13px; color: var(--text-secondary);
+    cursor: pointer; transition: var(--transition); margin-bottom: 4px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .chat-prompt-btn:hover { background: var(--lavender); color: var(--lavender-text); }
+  .chat-prompt-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--lavender-mid); flex-shrink: 0; }
+
+  .chat-main {
+    background: var(--white); border-radius: var(--card-radius);
+    border: 1px solid var(--border);
+    display: flex; flex-direction: column; overflow: hidden;
+    min-height: 500px;
+  }
+  .chat-header {
+    padding: 1rem 1.25rem; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .ai-avatar {
+    width: 36px; height: 36px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--lavender-mid), var(--lavender-deep));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .chat-header-info h4 { font-size: 15px; font-weight: 600; }
+  .chat-header-info span { font-size: 12px; color: var(--sage-deep); }
+  .online-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--sage-deep); display: inline-block; margin-right: 4px;
+  }
+
+  .chat-messages {
+    flex: 1; padding: 1.25rem; overflow-y: auto; display: flex; flex-direction: column; gap: 12px;
+  }
+  .chat-msg { display: flex; gap: 10px; max-width: 85%; }
+  .chat-msg.user { align-self: flex-end; flex-direction: row-reverse; }
+  .msg-bubble {
+    padding: 10px 14px; border-radius: 16px; font-size: 14px; line-height: 1.55;
+  }
+  .chat-msg.ai .msg-bubble {
+    background: var(--off-white); color: var(--text-primary);
+    border-bottom-left-radius: 4px;
+  }
+  .chat-msg.user .msg-bubble {
+    background: var(--lavender-deep); color: var(--white);
+    border-bottom-right-radius: 4px;
+  }
+  .msg-avatar {
+    width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; font-size: 14px;
+  }
+
+  .chat-input-area {
+    padding: 1rem 1.25rem; border-top: 1px solid var(--border);
+    display: flex; gap: 10px; align-items: flex-end;
+  }
+  .chat-input {
+    flex: 1; resize: none; border-radius: 14px; padding: 11px 14px;
+    font-size: 14px; min-height: 44px; max-height: 120px;
+  }
+  .mood-chip-row { display: flex; gap: 6px; margin-bottom: 8px; flex-wrap: wrap; }
+  .mood-chip {
+    padding: 4px 12px; border-radius: 20px; font-size: 12px;
+    background: var(--off-white); color: var(--text-secondary);
+    border: 1px solid var(--border); cursor: pointer;
+  }
+
+  /* ═══════════════════════════════════════
+     PAGE 8: PROGRESS
+  ═══════════════════════════════════════ */
+  .progress-page { padding: 2rem 0; }
+  .progress-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+
+  .chart-area {
+    height: 140px; position: relative;
+    border-bottom: 1px solid var(--border); margin-bottom: 8px;
+    display: flex; align-items: flex-end; gap: 4px; padding: 0 4px;
+  }
+  .chart-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .chart-bar {
+    width: 100%; border-radius: 8px 8px 0 0; min-height: 8px;
+    background: var(--lavender-mid);
+  }
+  .chart-bar.high { background: var(--sage-mid); }
+  .chart-bar.low { background: var(--peach-mid); }
+  .chart-day { font-size: 10px; color: var(--text-muted); }
+
+  .heatmap-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  .heatmap-cell {
+    aspect-ratio: 1; border-radius: 4px;
+  }
+  .heatmap-cell.l0 { background: var(--off-white); border: 1px solid var(--border); }
+  .heatmap-cell.l1 { background: #D6EDD6; }
+  .heatmap-cell.l2 { background: #A8D4A8; }
+  .heatmap-cell.l3 { background: #5AA86A; }
+  .heatmap-cell.l4 { background: #2E7A3A; }
+  .heatmap-cell.today { outline: 2px solid var(--lavender-deep); outline-offset: 1px; }
+
+  .insight-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px; border-radius: 12px; background: var(--off-white); margin-bottom: 8px;
+  }
+  .insight-dot {
+    width: 8px; height: 8px; border-radius: 50%; margin-top: 6px; flex-shrink: 0;
+  }
+  .insight-item p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+  .insight-item strong { color: var(--text-primary); }
+
+  /* ═══════════════════════════════════════
+     PAGE 9: SETTINGS
+  ═══════════════════════════════════════ */
+  .settings-layout { display: grid; grid-template-columns: 200px 1fr; gap: 24px; padding: 2rem 0; }
+  @media (max-width: 700px) { .settings-layout { grid-template-columns: 1fr; } }
+  .settings-nav { list-style: none; }
+  .settings-nav-item {
+    padding: 9px 14px; border-radius: 10px; font-size: 14px;
+    cursor: pointer; color: var(--text-secondary); margin-bottom: 2px;
+    display: flex; align-items: center; gap: 10px; transition: var(--transition);
+  }
+  .settings-nav-item.active { background: var(--lavender); color: var(--lavender-text); }
+  .settings-nav-item svg { width: 16px; height: 16px; }
+
+  .settings-section h2 { font-size: 18px; font-weight: 600; margin-bottom: 1.5rem; }
+  .settings-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 0; border-bottom: 1px solid var(--border);
+  }
+  .settings-row:last-child { border-bottom: none; }
+  .settings-row-label strong { display: block; font-size: 14px; font-weight: 500; }
+  .settings-row-label span { font-size: 12px; color: var(--text-muted); }
+  .toggle {
+    width: 44px; height: 26px; border-radius: 13px;
+    background: var(--sage-mid); position: relative; cursor: pointer; flex-shrink: 0;
+  }
+  .toggle::after {
+    content: ''; position: absolute; top: 3px; left: 21px;
+    width: 20px; height: 20px; border-radius: 50%; background: var(--white);
+    transition: var(--transition);
+  }
+  .toggle.off { background: var(--border-med); }
+  .toggle.off::after { left: 3px; }
+
+  .profile-hero {
+    display: flex; align-items: center; gap: 1rem; margin-bottom: 1.75rem;
+    padding: 1.5rem; background: var(--lavender); border-radius: 16px;
+  }
+  .profile-avatar {
+    width: 60px; height: 60px; border-radius: 50%;
+    background: var(--lavender-deep); display: flex; align-items: center;
+    justify-content: center; font-size: 22px; font-weight: 600; color: var(--white);
+  }
+  .profile-info h3 { font-size: 18px; font-weight: 600; }
+  .profile-info span { font-size: 13px; color: var(--lavender-text); }
+
+  /* Notification dot */
+  .notif-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--peach-deep); display: inline-block;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ NAVIGATION ═══════════ -->
+<nav class="nav">
+  <a class="nav-logo" href="#" onclick="showPage('landing')">
+    <span class="nav-logo-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#7C6BC4" stroke-width="2" stroke-linecap="round">
+        <path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/>
+      </svg>
+    </span>
+    MindEase
+  </a>
+  <div class="nav-links">
+    <button class="nav-link" onclick="showPage('dashboard')">Dashboard</button>
+    <button class="nav-link" onclick="showPage('checkin')">Check-in</button>
+    <button class="nav-link" onclick="showPage('journal')">Journal</button>
+    <button class="nav-link" onclick="showPage('breathe')">Breathe</button>
+    <button class="nav-link" onclick="showPage('chat')">AI Support</button>
+    <button class="nav-link" onclick="showPage('progress')">Progress</button>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px;">
+    <div class="nav-avatar" onclick="showPage('settings')">AR</div>
+  </div>
+</nav>
+
+<!-- ═══════════ PAGES ═══════════ -->
+<div class="pages">
+
+  <!-- ── PAGE: LANDING ── -->
+  <div class="page active" id="page-landing">
+    <div class="landing-hero">
+      <div class="hero-pill">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
+        Mental wellness for Indian students
+      </div>
+      <h1 class="hero-title">
+        Your mind matters as much<br>as your <em>rank</em>
+      </h1>
+      <p class="hero-desc">
+        Track your mood, identify stress triggers, journal your thoughts, and get personalized AI wellness support — built for NEET, JEE, UPSC and every exam you're conquering.
+      </p>
+      <div class="hero-cta">
+        <button class="btn btn-primary btn-lg" onclick="showPage('auth')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
+          Start your journey
+        </button>
+        <button class="btn btn-outline btn-lg" onclick="showPage('dashboard')">
+          See demo →
+        </button>
+      </div>
+      <div class="hero-exams">
+        <span class="exam-chip">NEET</span>
+        <span class="exam-chip">JEE Mains & Advanced</span>
+        <span class="exam-chip">CUET</span>
+        <span class="exam-chip">CAT</span>
+        <span class="exam-chip">GATE</span>
+        <span class="exam-chip">UPSC</span>
+        <span class="exam-chip">CBSE Boards</span>
+        <span class="exam-chip">State Boards</span>
+      </div>
+    </div>
+
+    <!-- Features -->
+    <div class="container section">
+      <div style="text-align:center;margin-bottom:2rem;">
+        <div class="badge badge-lavender" style="margin-bottom:10px;">Everything you need</div>
+        <h2 style="font-family:var(--font-serif);font-size:clamp(1.5rem,3vw,2.2rem);font-weight:400;margin-bottom:0.5rem;">Tools built for exam warriors</h2>
+        <p style="color:var(--text-muted);font-size:15px;">Not generic wellness. Designed specifically for the pressure of Indian competitive exams.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon" style="background:var(--lavender);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#7C6BC4" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <h3>Daily Mood Check-in</h3>
+          <p>30-second daily check-in with emoji scale, stress triggers, and a short journal prompt.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:var(--sage);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#4A8F5A" stroke-width="2"><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><circle cx="12" cy="12" r="10"/></svg>
+          </div>
+          <h3>Guided Breathing</h3>
+          <p>4-7-8, Box breathing, and Pranayama techniques with beautiful animated visuals.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:var(--sky);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#2E88BD" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h3>AI Wellness Chat</h3>
+          <p>Powered by Gemini. Get personalized coping strategies, affirmations, and study tips.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:var(--peach);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#D4742A" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <h3>Mood Analytics</h3>
+          <p>Track patterns over time. See your mood trends, streak calendar, and stress triggers.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:var(--lavender);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#7C6BC4" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </div>
+          <h3>Private Journal</h3>
+          <p>A safe, encrypted space to write your thoughts, fears, and victories.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:var(--sage);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#4A8F5A" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3>Streak &amp; Gamification</h3>
+          <p>Build healthy habits with daily streaks, milestones, and motivational badges.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quotes -->
+    <div class="container section" style="padding-top:0;">
+      <div style="margin-bottom:1.5rem;">
+        <div class="badge badge-peach" style="margin-bottom:8px;">Inspiration</div>
+        <h2 style="font-size:20px;font-weight:600;">From students who made it</h2>
+      </div>
+      <div class="quotes-row">
+        <div class="quote-card">
+          <p class="quote-text">"The pressure of JEE is immense. Taking 5 minutes each day for my mental health made a huge difference. You can crack it — believe in yourself."</p>
+          <div class="quote-author">
+            <div class="quote-avatar" style="background:var(--lavender-deep);">KV</div>
+            <div class="quote-meta">
+              <strong>Kalpit Veerwal</strong>
+              <span>JEE Mains AIR 1, 2017</span>
+            </div>
+          </div>
+        </div>
+        <div class="quote-card">
+          <p class="quote-text">"Burnout is real. The students who take care of their mind alongside their studies are the ones who truly succeed in the long run."</p>
+          <div class="quote-author">
+            <div class="quote-avatar" style="background:var(--sage-deep);">AP</div>
+            <div class="quote-meta">
+              <strong>Anushka Patra</strong>
+              <span>NEET AIR 1, 2022</span>
+            </div>
+          </div>
+        </div>
+        <div class="quote-card">
+          <p class="quote-text">"UPSC tests your character and resilience as much as your knowledge. Build mental strength every single day — it compounds."</p>
+          <div class="quote-author">
+            <div class="quote-avatar" style="background:var(--peach-deep);">SK</div>
+            <div class="quote-meta">
+              <strong>Srushti Jayant Deshmukh</strong>
+              <span>UPSC CSE AIR 5, 2018</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Crisis Banner -->
+    <div class="container" style="padding-bottom:3rem;">
+      <div class="crisis-banner">
+        <span class="crisis-banner-icon">🆘</span>
+        <div class="crisis-banner-text">
+          <strong>Need to talk to someone right now?</strong>
+          <span>Free, confidential mental health helplines available 24/7 in India</span>
+        </div>
+        <div class="crisis-links">
+          <a class="crisis-link" href="#">iCall · 9152987821</a>
+          <a class="crisis-link" href="#">Vandrevala · 1860-2662-345</a>
+          <a class="crisis-link" href="#">iMind · 080-46110007</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PAGE: AUTH ── -->
+  <div class="page" id="page-auth">
+    <div class="auth-page">
+      <div class="auth-card">
+        <div class="auth-logo">
+          <a class="nav-logo" href="#" onclick="showPage('landing')">
+            <span class="nav-logo-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#7C6BC4" stroke-width="2" stroke-linecap="round"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
+            </span>
+            MindEase
+          </a>
+        </div>
+        <div class="auth-tabs">
+          <button class="auth-tab active" onclick="switchAuthTab(this,'login')">Sign in</button>
+          <button class="auth-tab" onclick="switchAuthTab(this,'register')">Create account</button>
+        </div>
+
+        <!-- Login Form -->
+        <div id="auth-login">
+          <div class="form-group">
+            <label>Email address</label>
+            <input type="email" placeholder="you@example.com" />
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" placeholder="••••••••" />
+          </div>
+          <div style="text-align:right;margin-bottom:1.1rem;">
+            <a href="#" style="font-size:13px;color:var(--lavender-deep);text-decoration:none;">Forgot password?</a>
+          </div>
+          <button class="btn btn-primary" style="width:100%;justify-content:center;padding:12px;" onclick="showPage('dashboard')">
+            Sign in to MindEase
+          </button>
+          <div class="auth-divider">or continue with</div>
+          <button class="btn btn-outline" style="width:100%;justify-content:center;padding:11px;">
+            <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+            Continue with Google
+          </button>
+        </div>
+
+        <!-- Register Form -->
+        <div id="auth-register" style="display:none;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <div class="form-group">
+              <label>First name</label>
+              <input type="text" placeholder="Arjun" />
+            </div>
+            <div class="form-group">
+              <label>Last name</label>
+              <input type="text" placeholder="Sharma" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email address</label>
+            <input type="email" placeholder="you@example.com" />
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" placeholder="Create a strong password" />
+          </div>
+          <div class="form-group">
+            <label>Which exam are you preparing for?</label>
+            <div class="exam-select-grid">
+              <div class="exam-select-btn selected">NEET</div>
+              <div class="exam-select-btn">JEE</div>
+              <div class="exam-select-btn">CUET</div>
+              <div class="exam-select-btn">CAT</div>
+              <div class="exam-select-btn">GATE</div>
+              <div class="exam-select-btn">UPSC</div>
+              <div class="exam-select-btn">Boards</div>
+              <div class="exam-select-btn">Other</div>
+            </div>
+          </div>
+          <div class="checkbox-row">
+            <input type="checkbox" checked />
+            <span>I agree to the <a href="#" style="color:var(--lavender-deep);">Terms of Service</a> and <a href="#" style="color:var(--lavender-deep);">Privacy Policy</a></span>
+          </div>
+          <button class="btn btn-primary" style="width:100%;justify-content:center;padding:12px;" onclick="showPage('dashboard')">
+            Create my account
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PAGE: DASHBOARD ── -->
+  <div class="page" id="page-dashboard">
+    <div class="container">
+      <div class="dashboard-header">
+        <div class="dash-greeting">Good evening, <span>Arjun</span> 👋</div>
+        <div class="dash-sub">Saturday, 7 June 2025 · 127 days to NEET</div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-label">Current streak</div>
+          <div class="stat-value" style="color:var(--lavender-deep);">12 🔥</div>
+          <div class="stat-sub">days in a row</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Avg. mood this week</div>
+          <div class="stat-value">3.8 <span style="font-size:20px;">😊</span></div>
+          <div class="stat-sub">↑ 0.4 from last week</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Journal entries</div>
+          <div class="stat-value" style="color:var(--sage-deep);">24</div>
+          <div class="stat-sub">this month</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Breathe sessions</div>
+          <div class="stat-value" style="color:var(--sky-deep);">9</div>
+          <div class="stat-sub">this week</div>
+        </div>
+      </div>
+
+      <div class="dash-grid">
+        <div>
+          <!-- Mood chart -->
+          <div class="card" style="margin-bottom:16px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem;">
+              <div>
+                <div class="section-title" style="font-size:16px;">Mood this week</div>
+                <div class="section-sub">Your daily mood scores</div>
+              </div>
+              <span class="badge badge-sage">This week</span>
+            </div>
+            <div class="mood-mini-chart">
+              <div class="mood-bar" style="height:55%;background:var(--peach-mid);"></div>
+              <div class="mood-bar" style="height:70%;background:var(--lavender-mid);"></div>
+              <div class="mood-bar" style="height:45%;background:var(--peach-mid);"></div>
+              <div class="mood-bar" style="height:80%;background:var(--sage-mid);"></div>
+              <div class="mood-bar" style="height:75%;background:var(--sage-mid);"></div>
+              <div class="mood-bar" style="height:90%;background:var(--lavender-mid);"></div>
+              <div class="mood-bar" style="height:60%;background:var(--lavender-mid);"></div>
+            </div>
+            <div class="mood-bar-labels">
+              <span class="mood-bar-label">Mon</span>
+              <span class="mood-bar-label">Tue</span>
+              <span class="mood-bar-label">Wed</span>
+              <span class="mood-bar-label">Thu</span>
+              <span class="mood-bar-label">Fri</span>
+              <span class="mood-bar-label">Sat</span>
+              <span class="mood-bar-label">Sun</span>
+            </div>
+          </div>
+
+          <!-- Top triggers -->
+          <div class="card" style="margin-bottom:16px;">
+            <div class="section-title" style="font-size:16px;margin-bottom:1rem;">Top stress triggers this week</div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;">
+                  <span>Mock test anxiety</span><span style="color:var(--text-muted);">5 times</span>
+                </div>
+                <div style="height:6px;background:var(--border);border-radius:4px;">
+                  <div style="height:100%;width:70%;background:var(--lavender-mid);border-radius:4px;"></div>
+                </div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;">
+                  <span>Sleep issues</span><span style="color:var(--text-muted);">3 times</span>
+                </div>
+                <div style="height:6px;background:var(--border);border-radius:4px;">
+                  <div style="height:100%;width:45%;background:var(--peach-mid);border-radius:4px;"></div>
+                </div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;">
+                  <span>Family pressure</span><span style="color:var(--text-muted);">2 times</span>
+                </div>
+                <div style="height:6px;background:var(--border);border-radius:4px;">
+                  <div style="height:100%;width:28%;background:var(--sky-mid);border-radius:4px;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent journal entries -->
+          <div class="card">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+              <div class="section-title" style="font-size:16px;">Recent journal entries</div>
+              <button class="btn btn-soft" style="padding:6px 12px;font-size:13px;" onclick="showPage('journal')">View all →</button>
+            </div>
+            <div class="journal-entry card-sm" style="margin-bottom:8px;">
+              <div class="journal-entry-header">
+                <div class="journal-mood-dot" style="background:var(--sage);">😊</div>
+                <div class="journal-meta">
+                  <strong>Feeling better today</strong>
+                  <span>Today, 8:30 PM</span>
+                </div>
+              </div>
+              <p>Finished the organic chemistry chapter. The breathing exercise really helped calm my nerves before the practice test...</p>
+            </div>
+            <div class="journal-entry card-sm">
+              <div class="journal-entry-header">
+                <div class="journal-mood-dot" style="background:var(--peach);">😰</div>
+                <div class="journal-meta">
+                  <strong>Tough mock test day</strong>
+                  <span>Yesterday, 9:15 PM</span>
+                </div>
+              </div>
+              <p>Scored lower than expected on the physics mock. Feeling anxious but I know I can do better with more practice...</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <!-- Check-in prompt -->
+          <div class="checkin-prompt" style="margin-bottom:16px;">
+            <h3>Time for your check-in 🌙</h3>
+            <p>Take 30 seconds to log how you're feeling right now. It helps you understand your patterns.</p>
+            <button class="btn btn-primary" onclick="showPage('checkin')">Start today's check-in</button>
+          </div>
+
+          <!-- Streak calendar -->
+          <div class="card" style="margin-bottom:16px;">
+            <div class="section-title" style="font-size:15px;margin-bottom:0.75rem;">12-day streak 🔥</div>
+            <div class="streak-row">
+              <div class="streak-dot done">✓</div>
+              <div class="streak-dot done">✓</div>
+              <div class="streak-dot done">✓</div>
+              <div class="streak-dot done">✓</div>
+              <div class="streak-dot done">✓</div>
+              <div class="streak-dot done">✓</div>
+              <div class="streak-dot done">✓</div>
+              <div class="streak-dot done">✓</div>
+              <div class="streak-dot done">✓</div>
+              <div class="streak-dot done">✓</div>
+              <div class="streak-dot done">✓</div>
+              <div class="streak-dot today">★</div>
+              <div class="streak-dot empty">13</div>
+              <div class="streak-dot empty">14</div>
+            </div>
+            <p style="font-size:12px;color:var(--text-muted);margin-top:10px;">Keep it going! 3 more days for your next badge.</p>
+          </div>
+
+          <!-- AI tip -->
+          <div class="tip-card" style="margin-bottom:16px;">
+            <div class="tip-label">✦ AI Wellness Tip</div>
+            <p>Based on your recent check-ins, mock test anxiety is your biggest trigger. Try the 4-7-8 breathing technique 10 minutes before every practice test.</p>
+            <cite>— Personalized for your NEET journey</cite>
+          </div>
+
+          <!-- Quick actions -->
+          <div class="card">
+            <div class="section-title" style="font-size:15px;margin-bottom:0.75rem;">Quick actions</div>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <button class="btn btn-soft" style="justify-content:flex-start;width:100%;" onclick="showPage('breathe')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                Start breathing exercise
+              </button>
+              <button class="btn btn-outline" style="justify-content:flex-start;width:100%;" onclick="showPage('chat')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                Talk to AI support
+              </button>
+              <button class="btn btn-outline" style="justify-content:flex-start;width:100%;" onclick="showPage('journal')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                Write in journal
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Crisis Banner -->
+      <div style="padding: 1.5rem 0;">
+        <div class="crisis-banner">
+          <span class="crisis-banner-icon">🆘</span>
+          <div class="crisis-banner-text">
+            <strong>Feeling overwhelmed? You're not alone.</strong>
+            <span>Free mental health support — call or chat anytime</span>
+          </div>
+          <div class="crisis-links">
+            <a class="crisis-link" href="#">iCall · 9152987821</a>
+            <a class="crisis-link" href="#">Vandrevala · 1860-2662-345</a>
+            <a class="crisis-link" href="#">iMind · 080-46110007</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PAGE: CHECK-IN ── -->
+  <div class="page" id="page-checkin">
+    <div class="checkin-page">
+      <div style="margin-bottom:1.5rem;">
+        <h1 style="font-size:24px;font-weight:600;margin-bottom:4px;">Daily check-in</h1>
+        <p style="color:var(--text-muted);font-size:14px;">Takes about 60 seconds · Saturday, 7 June</p>
+      </div>
+      <div class="checkin-progress">
+        <div class="checkin-progress-dot done"></div>
+        <div class="checkin-progress-dot active"></div>
+        <div class="checkin-progress-dot"></div>
+        <div class="checkin-progress-dot"></div>
+      </div>
+
+      <!-- Step 1: Mood -->
+      <div class="checkin-step">
+        <div class="step-num">1</div>
+        <h2>How are you feeling right now?</h2>
+        <p>Pick the emoji that best describes your mood today</p>
+        <div class="mood-scale">
+          <div class="mood-btn">
+            <span class="emoji">😭</span>
+            <span class="mood-name">Awful</span>
+          </div>
+          <div class="mood-btn">
+            <span class="emoji">😔</span>
+            <span class="mood-name">Low</span>
+          </div>
+          <div class="mood-btn selected">
+            <span class="emoji">😐</span>
+            <span class="mood-name">Okay</span>
+          </div>
+          <div class="mood-btn">
+            <span class="emoji">😊</span>
+            <span class="mood-name">Good</span>
+          </div>
+          <div class="mood-btn">
+            <span class="emoji">😄</span>
+            <span class="mood-name">Great</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2: Triggers -->
+      <div class="checkin-step">
+        <div class="step-num">2</div>
+        <h2>What's weighing on your mind?</h2>
+        <p>Select all that apply — this helps identify your stress patterns</p>
+        <div class="trigger-grid">
+          <div class="trigger-btn selected">Mock test anxiety</div>
+          <div class="trigger-btn">Syllabus pressure</div>
+          <div class="trigger-btn selected">Sleep issues</div>
+          <div class="trigger-btn">Family expectations</div>
+          <div class="trigger-btn">Peer comparison</div>
+          <div class="trigger-btn">Low concentration</div>
+          <div class="trigger-btn">Fear of failure</div>
+          <div class="trigger-btn">Physical exhaustion</div>
+          <div class="trigger-btn">Loneliness</div>
+          <div class="trigger-btn">Nothing in particular</div>
+        </div>
+      </div>
+
+      <!-- Step 3: Journal -->
+      <div class="checkin-step">
+        <div class="step-num">3</div>
+        <h2>Write a few words (optional)</h2>
+        <p>What's on your mind today? Your journal is private and encrypted.</p>
+        <textarea style="min-height:120px;resize:none;" placeholder="Today I felt... The hardest part was... One small win was..."></textarea>
+      </div>
+
+      <!-- Step 4: Energy level -->
+      <div class="checkin-step">
+        <div class="step-num">4</div>
+        <h2>Energy level today?</h2>
+        <p>How would you rate your physical and mental energy?</p>
+        <div style="display:flex;align-items:center;gap:14px;">
+          <span style="font-size:13px;color:var(--text-muted);">Exhausted</span>
+          <input type="range" min="1" max="10" value="6" style="flex:1;" />
+          <span style="font-size:13px;color:var(--text-muted);">Energised</span>
+        </div>
+        <div style="text-align:center;font-size:28px;font-weight:600;color:var(--lavender-deep);margin-top:8px;">6 / 10</div>
+      </div>
+
+      <div style="display:flex;gap:12px;margin-top:1rem;">
+        <button class="btn btn-primary btn-lg" onclick="showPage('dashboard')">
+          Save check-in ✓
+        </button>
+        <button class="btn btn-outline btn-lg" onclick="showPage('dashboard')">Skip for now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PAGE: JOURNAL ── -->
+  <div class="page" id="page-journal">
+    <div class="container">
+      <div style="padding: 2rem 0 0;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:12px;">
+          <div>
+            <h1 class="section-title" style="font-size:22px;">My Journal</h1>
+            <p class="section-sub">24 entries this month</p>
+          </div>
+          <button class="btn btn-primary" onclick="showPage('checkin')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            New entry
+          </button>
+        </div>
+        <!-- Search & filter -->
+        <div style="display:flex;gap:10px;margin-bottom:1.5rem;flex-wrap:wrap;">
+          <input type="text" placeholder="Search entries..." style="max-width:280px;" />
+          <select style="width:auto;">
+            <option>All moods</option>
+            <option>Great</option>
+            <option>Good</option>
+            <option>Okay</option>
+            <option>Low</option>
+            <option>Awful</option>
+          </select>
+          <select style="width:auto;">
+            <option>This month</option>
+            <option>Last 7 days</option>
+            <option>All time</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="journal-layout">
+        <div>
+          <div class="journal-entry">
+            <div class="journal-entry-header">
+              <div class="journal-mood-dot" style="background:var(--sage);">😊</div>
+              <div class="journal-meta">
+                <strong>Feeling better today</strong>
+                <span>Today, 8:30 PM · Mood: 4/5</span>
+              </div>
+            </div>
+            <p>Finished the organic chemistry chapter. The breathing exercise really helped calm my nerves before the practice test. I got 68/90 which is better than last week!</p>
+            <div class="journal-entry-tags">
+              <span class="badge badge-sage">Good mood</span>
+              <span class="badge badge-lavender">Study win</span>
+            </div>
+          </div>
+
+          <div class="journal-entry">
+            <div class="journal-entry-header">
+              <div class="journal-mood-dot" style="background:var(--peach);">😰</div>
+              <div class="journal-meta">
+                <strong>Tough mock test day</strong>
+                <span>Yesterday, 9:15 PM · Mood: 2/5</span>
+              </div>
+            </div>
+            <p>Scored lower than expected on the physics mock. Feeling anxious about the upcoming test. Talked to the AI and it suggested I break my study sessions into 45-minute chunks.</p>
+            <div class="journal-entry-tags">
+              <span class="badge badge-peach">Mock test anxiety</span>
+            </div>
+          </div>
+
+          <div class="journal-entry">
+            <div class="journal-entry-header">
+              <div class="journal-mood-dot" style="background:var(--lavender);">😐</div>
+              <div class="journal-meta">
+                <strong>Just another day</strong>
+                <span>4 June · Mood: 3/5</span>
+              </div>
+            </div>
+            <p>Nothing special to report. Did my revision. Feeling okay but a bit tired. Going to sleep early tonight and try to feel refreshed tomorrow.</p>
+            <div class="journal-entry-tags">
+              <span class="badge badge-lavender">Sleep issues</span>
+            </div>
+          </div>
+
+          <div class="journal-entry">
+            <div class="journal-entry-header">
+              <div class="journal-mood-dot" style="background:var(--sage);">😄</div>
+              <div class="journal-meta">
+                <strong>Great study session!</strong>
+                <span>3 June · Mood: 5/5</span>
+              </div>
+            </div>
+            <p>Finally understood the concept of Hardy-Weinberg equilibrium. It clicked after the third reading. Feeling really motivated and pumped for NEET!</p>
+            <div class="journal-entry-tags">
+              <span class="badge badge-sage">Motivated</span>
+              <span class="badge badge-sky">Concept clarity</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div>
+          <div class="card" style="margin-bottom:16px;">
+            <div class="section-title" style="font-size:15px;margin-bottom:1rem;">Monthly mood overview</div>
+            <div class="chart-area">
+              <div class="chart-col"><div class="chart-bar" style="height:55%;"></div><span class="chart-day">1</span></div>
+              <div class="chart-col"><div class="chart-bar high" style="height:80%;"></div><span class="chart-day">2</span></div>
+              <div class="chart-col"><div class="chart-bar low" style="height:35%;"></div><span class="chart-day">3</span></div>
+              <div class="chart-col"><div class="chart-bar" style="height:65%;"></div><span class="chart-day">4</span></div>
+              <div class="chart-col"><div class="chart-bar high" style="height:90%;"></div><span class="chart-day">5</span></div>
+              <div class="chart-col"><div class="chart-bar" style="height:60%;"></div><span class="chart-day">6</span></div>
+              <div class="chart-col"><div class="chart-bar low" style="height:40%;"></div><span class="chart-day">7</span></div>
+            </div>
+            <div style="display:flex;gap:10px;font-size:11px;color:var(--text-muted);margin-top:4px;">
+              <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;background:var(--sage-mid);border-radius:3px;"></span>Great</span>
+              <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;background:var(--lavender-mid);border-radius:3px;"></span>Okay</span>
+              <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;background:var(--peach-mid);border-radius:3px;"></span>Low</span>
+            </div>
+          </div>
+
+          <div class="card" style="margin-bottom:16px;">
+            <div class="section-title" style="font-size:15px;margin-bottom:1rem;">Common themes</div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;">
+              <span class="badge badge-peach">Mock anxiety ×8</span>
+              <span class="badge badge-lavender">Sleep issues ×5</span>
+              <span class="badge badge-sage">Study wins ×4</span>
+              <span class="badge badge-sky">Family pressure ×3</span>
+              <span class="badge badge-peach">Low energy ×3</span>
+            </div>
+          </div>
+
+          <div class="tip-card">
+            <div class="tip-label">✦ Pattern detected</div>
+            <p>Your mood tends to dip after mock tests. Consider scheduling a 10-minute breathing break immediately after each test.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PAGE: BREATHE ── -->
+  <div class="page" id="page-breathe">
+    <div class="breathe-page">
+      <h1 style="font-size:26px;font-weight:600;text-align:center;margin-bottom:4px;">Breathing exercises</h1>
+      <p style="color:var(--text-muted);font-size:14px;text-align:center;margin-bottom:1.5rem;">Calm your nervous system. Reset your focus.</p>
+
+      <div class="breathe-circle-wrap">
+        <div class="breathe-ring-outer"></div>
+        <div class="breathe-ring-inner">
+          <div class="breathe-phase">Breathe in</div>
+          <div class="breathe-count">4</div>
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-bottom:1.5rem;">
+        <p style="font-size:14px;color:var(--text-muted);">Session: 3 / 5 cycles · 4-7-8 technique</p>
+      </div>
+
+      <div class="breathe-controls">
+        <button class="btn btn-primary btn-lg">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+          Pause
+        </button>
+        <button class="btn btn-outline btn-lg">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+          Restart
+        </button>
+      </div>
+
+      <div class="technique-cards">
+        <div class="technique-card active">
+          <h4>4-7-8</h4>
+          <p>Inhale 4s · Hold 7s · Exhale 8s</p>
+          <p style="font-size:11px;margin-top:4px;color:var(--lavender-text);">Calms anxiety quickly</p>
+        </div>
+        <div class="technique-card">
+          <h4>Box breathing</h4>
+          <p>4s · 4s · 4s · 4s</p>
+          <p style="font-size:11px;margin-top:4px;">Used by Navy SEALs</p>
+        </div>
+        <div class="technique-card">
+          <h4>Anulom Vilom</h4>
+          <p>Alternate nostril</p>
+          <p style="font-size:11px;margin-top:4px;">Classic pranayama</p>
+        </div>
+        <div class="technique-card">
+          <h4>5-5 breathing</h4>
+          <p>Inhale 5s · Exhale 5s</p>
+          <p style="font-size:11px;margin-top:4px;">Beginner friendly</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PAGE: AI CHAT ── -->
+  <div class="page" id="page-chat">
+    <div class="container">
+      <div style="padding: 1.5rem 0 0; margin-bottom: 4px;">
+        <h1 class="section-title">AI Wellness Support</h1>
+        <p class="section-sub">Powered by Gemini · Your conversations are private</p>
+      </div>
+      <div class="chat-layout">
+        <div class="chat-sidebar">
+          <h3>Suggested topics</h3>
+          <button class="chat-prompt-btn">
+            <span class="chat-prompt-dot"></span>
+            I'm feeling anxious before my mock test
+          </button>
+          <button class="chat-prompt-btn">
+            <span class="chat-prompt-dot"></span>
+            How do I deal with family pressure?
+          </button>
+          <button class="chat-prompt-btn">
+            <span class="chat-prompt-dot"></span>
+            I can't sleep due to exam stress
+          </button>
+          <button class="chat-prompt-btn">
+            <span class="chat-prompt-dot"></span>
+            I feel like giving up on NEET
+          </button>
+          <button class="chat-prompt-btn">
+            <span class="chat-prompt-dot"></span>
+            Help me make a study schedule
+          </button>
+          <button class="chat-prompt-btn">
+            <span class="chat-prompt-dot"></span>
+            How to avoid comparison with peers
+          </button>
+          <button class="chat-prompt-btn">
+            <span class="chat-prompt-dot"></span>
+            Motivate me for today
+          </button>
+          <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--border);">
+            <h3>Recent chats</h3>
+            <button class="chat-prompt-btn" style="color:var(--text-secondary);">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              Mock test anxiety tips
+            </button>
+            <button class="chat-prompt-btn" style="color:var(--text-secondary);">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              Sleep improvement plan
+            </button>
+          </div>
+        </div>
+
+        <div class="chat-main">
+          <div class="chat-header">
+            <div class="ai-avatar">🧠</div>
+            <div class="chat-header-info">
+              <h4>MindEase AI</h4>
+              <span><span class="online-dot"></span>Online · Here for you</span>
+            </div>
+            <div style="margin-left:auto;">
+              <span class="badge badge-lavender" style="font-size:11px;">Gemini 1.5 Flash</span>
+            </div>
+          </div>
+
+          <div class="chat-messages">
+            <div class="chat-msg ai">
+              <div class="msg-avatar" style="background:var(--lavender);">🧠</div>
+              <div>
+                <div class="msg-bubble">
+                  Namaste, Arjun! 🙏 I'm your MindEase AI. I know you're preparing for NEET — that's a big deal, and I'm here to support your mental well-being throughout the journey.<br><br>How are you feeling today? You can share anything — stress, anxiety, or even just a small win.
+                </div>
+              </div>
+            </div>
+
+            <div class="chat-msg user">
+              <div class="msg-avatar" style="background:var(--lavender-deep);color:white;font-size:12px;">AR</div>
+              <div class="msg-bubble">I'm really stressed about my upcoming mock test tomorrow. I keep getting low scores in Physics and it's making me anxious.</div>
+            </div>
+
+            <div class="chat-msg ai">
+              <div class="msg-avatar" style="background:var(--lavender);">🧠</div>
+              <div>
+                <div class="msg-bubble">
+                  I hear you — Physics mock anxiety is super common among NEET aspirants, and it makes total sense to feel this way. Let me share a few things that might help:<br><br>
+                  <strong>Right now:</strong> Try the 4-7-8 breathing exercise (4 seconds in, hold 7, out for 8). Just 5 cycles before bed tonight.<br><br>
+                  <strong>For tomorrow:</strong> Start with the sections you're most confident in. Physics last if needed — build momentum first.<br><br>
+                  Remember: one mock score doesn't define your NEET rank. It's just data to guide your revision. 💙 What topic in Physics feels hardest?
+                </div>
+              </div>
+            </div>
+
+            <div class="chat-msg user">
+              <div class="msg-avatar" style="background:var(--lavender-deep);color:white;font-size:12px;">AR</div>
+              <div class="msg-bubble">Magnetism and SHM mostly. I just can't visualize the concepts.</div>
+            </div>
+
+            <div class="chat-msg ai">
+              <div class="msg-avatar" style="background:var(--lavender);">🧠</div>
+              <div>
+                <div class="msg-bubble">
+                  Totally valid — those are highly visual topics. Here's what works for many students:<br><br>
+                  <strong>SHM:</strong> Think of it as a swing. Displacement = A·sin(ωt). Draw the graphs once by hand — muscle memory helps.<br><br>
+                  <strong>Magnetism:</strong> The right-hand rule is your best friend. Use a pen as the wire, curl fingers — the thumb shows current direction.<br><br>
+                  You've got this, Arjun. Want me to suggest a 45-minute revision plan for tonight?
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="mood-chip-row" style="padding:0 1.25rem 0;">
+              <span class="mood-chip">😊 Feeling okay</span>
+              <span class="mood-chip">😰 Very stressed</span>
+              <span class="mood-chip">💪 Motivated</span>
+              <span class="mood-chip">😴 Tired</span>
+            </div>
+            <div class="chat-input-area">
+              <textarea class="chat-input" placeholder="Share what's on your mind..."></textarea>
+              <button class="btn btn-primary btn-icon" style="padding:11px;flex-shrink:0;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PAGE: PROGRESS ── -->
+  <div class="page" id="page-progress">
+    <div class="container">
+      <div class="progress-page">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:12px;">
+          <div>
+            <h1 class="section-title" style="font-size:22px;">Your progress</h1>
+            <p class="section-sub">Tracking your mental wellness journey</p>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-soft" style="font-size:13px;padding:7px 14px;">7 days</button>
+            <button class="btn btn-outline" style="font-size:13px;padding:7px 14px;">30 days</button>
+            <button class="btn btn-outline" style="font-size:13px;padding:7px 14px;">All time</button>
+          </div>
+        </div>
+
+        <div class="stats-row" style="margin-bottom:1.5rem;">
+          <div class="stat-card">
+            <div class="stat-label">Avg mood score</div>
+            <div class="stat-value" style="color:var(--lavender-deep);">3.8</div>
+            <div class="stat-sub">↑ from 3.4 last week</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Check-in streak</div>
+            <div class="stat-value">12🔥</div>
+            <div class="stat-sub">Personal best!</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Best mood day</div>
+            <div class="stat-value" style="font-size:18px;">Tuesday</div>
+            <div class="stat-sub">Avg score 4.5</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Breathe sessions</div>
+            <div class="stat-value" style="color:var(--sage-deep);">9</div>
+            <div class="stat-sub">this week</div>
+          </div>
+        </div>
+
+        <div class="progress-grid">
+          <!-- Mood trend chart -->
+          <div class="card" style="grid-column: span 2;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+              <div class="section-title" style="font-size:16px;">Mood trend — last 7 days</div>
+              <span class="badge badge-lavender">↑ Improving</span>
+            </div>
+            <div class="chart-area" style="height:160px;">
+              <div class="chart-col"><div class="chart-bar low" style="height:40%;"></div><span class="chart-day">Mon</span></div>
+              <div class="chart-col"><div class="chart-bar" style="height:60%;"></div><span class="chart-day">Tue</span></div>
+              <div class="chart-col"><div class="chart-bar low" style="height:35%;"></div><span class="chart-day">Wed</span></div>
+              <div class="chart-col"><div class="chart-bar high" style="height:80%;"></div><span class="chart-day">Thu</span></div>
+              <div class="chart-col"><div class="chart-bar high" style="height:75%;"></div><span class="chart-day">Fri</span></div>
+              <div class="chart-col"><div class="chart-bar high" style="height:90%;"></div><span class="chart-day">Sat</span></div>
+              <div class="chart-col"><div class="chart-bar" style="height:65%;background:var(--border);border:2px dashed var(--lavender-mid);"></div><span class="chart-day" style="color:var(--lavender-deep);">Sun</span></div>
+            </div>
+          </div>
+
+          <!-- Activity heatmap -->
+          <div class="card">
+            <div class="section-title" style="font-size:15px;margin-bottom:1rem;">Check-in streak calendar</div>
+            <div class="heatmap-grid">
+              <div class="heatmap-cell l2"></div><div class="heatmap-cell l3"></div>
+              <div class="heatmap-cell l1"></div><div class="heatmap-cell l4"></div>
+              <div class="heatmap-cell l3"></div><div class="heatmap-cell l2"></div>
+              <div class="heatmap-cell l4"></div><div class="heatmap-cell l3"></div>
+              <div class="heatmap-cell l2"></div><div class="heatmap-cell l3"></div>
+              <div class="heatmap-cell l4"></div><div class="heatmap-cell l3"></div>
+              <div class="heatmap-cell l3"></div><div class="heatmap-cell l4"></div>
+              <div class="heatmap-cell l3"></div><div class="heatmap-cell l3"></div>
+              <div class="heatmap-cell l4"></div><div class="heatmap-cell l3"></div>
+              <div class="heatmap-cell l3"></div><div class="heatmap-cell l4"></div>
+              <div class="heatmap-cell l4"></div><div class="heatmap-cell l3"></div>
+              <div class="heatmap-cell l4"></div><div class="heatmap-cell l4"></div>
+              <div class="heatmap-cell today l4"></div><div class="heatmap-cell l0"></div>
+              <div class="heatmap-cell l0"></div><div class="heatmap-cell l0"></div>
+            </div>
+            <div style="display:flex;gap:6px;margin-top:10px;align-items:center;">
+              <span style="font-size:11px;color:var(--text-muted);">Less</span>
+              <div style="width:12px;height:12px;border-radius:3px;background:var(--off-white);border:1px solid var(--border);"></div>
+              <div style="width:12px;height:12px;border-radius:3px;background:#D6EDD6;"></div>
+              <div style="width:12px;height:12px;border-radius:3px;background:#A8D4A8;"></div>
+              <div style="width:12px;height:12px;border-radius:3px;background:#5AA86A;"></div>
+              <div style="width:12px;height:12px;border-radius:3px;background:#2E7A3A;"></div>
+              <span style="font-size:11px;color:var(--text-muted);">More</span>
+            </div>
+          </div>
+
+          <!-- AI Insights -->
+          <div class="card">
+            <div class="section-title" style="font-size:15px;margin-bottom:1rem;">AI insights</div>
+            <div class="insight-item">
+              <div class="insight-dot" style="background:var(--sage-deep);"></div>
+              <p>Your mood is <strong>22% better</strong> on days you complete breathing exercises. Keep it up!</p>
+            </div>
+            <div class="insight-item">
+              <div class="insight-dot" style="background:var(--peach-deep);"></div>
+              <p><strong>Mock tests on Wednesdays</strong> consistently lower your mood. Consider scheduling them differently.</p>
+            </div>
+            <div class="insight-item">
+              <div class="insight-dot" style="background:var(--lavender-deep);"></div>
+              <p>Your <strong>12-day check-in streak</strong> is your personal best. You're building a great habit!</p>
+            </div>
+            <div class="insight-item">
+              <div class="insight-dot" style="background:var(--sky-deep);"></div>
+              <p>Journaling about <strong>study wins</strong> correlates with higher mood scores the next day.</p>
+            </div>
+          </div>
+
+          <!-- Badges -->
+          <div class="card" style="grid-column: span 2;">
+            <div class="section-title" style="font-size:15px;margin-bottom:1rem;">Badges earned</div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;">
+              <div style="text-align:center;padding:12px 16px;background:var(--sage);border-radius:14px;border:1px solid var(--sage-mid);">
+                <div style="font-size:28px;margin-bottom:4px;">🔥</div>
+                <div style="font-size:12px;font-weight:600;color:var(--sage-text);">Streak Starter</div>
+                <div style="font-size:10px;color:var(--text-muted);">7-day streak</div>
+              </div>
+              <div style="text-align:center;padding:12px 16px;background:var(--lavender);border-radius:14px;border:1px solid var(--lavender-mid);">
+                <div style="font-size:28px;margin-bottom:4px;">🧘</div>
+                <div style="font-size:12px;font-weight:600;color:var(--lavender-text);">Breath Master</div>
+                <div style="font-size:10px;color:var(--text-muted);">10 sessions</div>
+              </div>
+              <div style="text-align:center;padding:12px 16px;background:var(--peach);border-radius:14px;border:1px solid var(--peach-mid);">
+                <div style="font-size:28px;margin-bottom:4px;">📖</div>
+                <div style="font-size:12px;font-weight:600;color:var(--peach-text);">Journal Keeper</div>
+                <div style="font-size:10px;color:var(--text-muted);">20 entries</div>
+              </div>
+              <div style="text-align:center;padding:12px 16px;background:var(--off-white);border-radius:14px;border:1px dashed var(--border-med);opacity:0.6;">
+                <div style="font-size:28px;margin-bottom:4px;">⭐</div>
+                <div style="font-size:12px;font-weight:600;color:var(--text-muted);">30-Day Champion</div>
+                <div style="font-size:10px;color:var(--text-muted);">18 days to go</div>
+              </div>
+              <div style="text-align:center;padding:12px 16px;background:var(--off-white);border-radius:14px;border:1px dashed var(--border-med);opacity:0.6;">
+                <div style="font-size:28px;margin-bottom:4px;">💎</div>
+                <div style="font-size:12px;font-weight:600;color:var(--text-muted);">Resilience Pro</div>
+                <div style="font-size:10px;color:var(--text-muted);">Complete 50 sessions</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PAGE: SETTINGS ── -->
+  <div class="page" id="page-settings">
+    <div class="container">
+      <div class="settings-layout">
+        <ul class="settings-nav">
+          <li class="settings-nav-item active" onclick="settingsTab(this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Profile
+          </li>
+          <li class="settings-nav-item" onclick="settingsTab(this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+            Exam &amp; Goals
+          </li>
+          <li class="settings-nav-item" onclick="settingsTab(this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            Notifications
+          </li>
+          <li class="settings-nav-item" onclick="settingsTab(this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Privacy
+          </li>
+          <li class="settings-nav-item" onclick="settingsTab(this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+            AI Settings
+          </li>
+        </ul>
+
+        <div class="settings-section">
+          <!-- Profile section -->
+          <div class="profile-hero">
+            <div class="profile-avatar">AR</div>
+            <div class="profile-info">
+              <h3>Arjun Sharma</h3>
+              <span>NEET aspirant · Jaipur, Rajasthan</span>
+            </div>
+            <button class="btn btn-soft" style="margin-left:auto;font-size:13px;padding:7px 14px;">Edit photo</button>
+          </div>
+
+          <h2>Profile settings</h2>
+          <div class="card" style="margin-bottom:1.25rem;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+              <div class="form-group" style="margin-bottom:0;">
+                <label>First name</label>
+                <input type="text" value="Arjun" />
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label>Last name</label>
+                <input type="text" value="Sharma" />
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom:14px;">
+              <label>Email address</label>
+              <input type="email" value="arjun.sharma@gmail.com" />
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label>Target exam</label>
+              <select>
+                <option selected>NEET</option>
+                <option>JEE Mains &amp; Advanced</option>
+                <option>CUET</option>
+                <option>CAT</option>
+                <option>GATE</option>
+                <option>UPSC</option>
+                <option>CBSE Boards</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-row-label">
+              <strong>Daily check-in reminder</strong>
+              <span>Get a gentle nudge every evening at 9 PM</span>
+            </div>
+            <div class="toggle"></div>
+          </div>
+          <div class="settings-row">
+            <div class="settings-row-label">
+              <strong>Breathing exercise reminders</strong>
+              <span>2 reminders per day before study sessions</span>
+            </div>
+            <div class="toggle"></div>
+          </div>
+          <div class="settings-row">
+            <div class="settings-row-label">
+              <strong>Streak alerts</strong>
+              <span>Don't let your streak break without a reminder</span>
+            </div>
+            <div class="toggle off"></div>
+          </div>
+          <div class="settings-row">
+            <div class="settings-row-label">
+              <strong>Weekly progress report</strong>
+              <span>AI summary of your wellness week every Sunday</span>
+            </div>
+            <div class="toggle"></div>
+          </div>
+
+          <div style="display:flex;gap:10px;margin-top:1.5rem;">
+            <button class="btn btn-primary">Save changes</button>
+            <button class="btn btn-outline" style="color:var(--peach-deep);border-color:rgba(212,116,42,0.3);">Delete account</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── MOBILE BOTTOM NAV ── -->
+<nav class="mobile-nav">
+  <div class="mobile-nav-inner">
+    <button class="mobile-nav-btn active" onclick="showPage('dashboard')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      Home
+    </button>
+    <button class="mobile-nav-btn" onclick="showPage('checkin')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      Check-in
+    </button>
+    <button class="mobile-nav-btn" onclick="showPage('breathe')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      Breathe
+    </button>
+    <button class="mobile-nav-btn" onclick="showPage('chat')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      AI Chat
+    </button>
+    <button class="mobile-nav-btn" onclick="showPage('progress')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      Progress
+    </button>
+  </div>
+</nav>
+
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const target = document.getElementById('page-' + id);
+    if (target) {
+      target.classList.add('active');
+      window.scrollTo(0, 0);
+    }
+    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+    document.querySelectorAll('.mobile-nav-btn').forEach(b => b.classList.remove('active'));
+  }
+
+  function switchAuthTab(btn, tab) {
+    document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('auth-login').style.display = tab === 'login' ? 'block' : 'none';
+    document.getElementById('auth-register').style.display = tab === 'register' ? 'block' : 'none';
+  }
+
+  document.querySelectorAll('.exam-select-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      this.classList.toggle('selected');
+    });
+  });
+
+  document.querySelectorAll('.mood-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
+      this.classList.add('selected');
+    });
+  });
+
+  document.querySelectorAll('.trigger-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      this.classList.toggle('selected');
+    });
+  });
+
+  document.querySelectorAll('.technique-card').forEach(card => {
+    card.addEventListener('click', function() {
+      document.querySelectorAll('.technique-card').forEach(c => c.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+
+  function settingsTab(item) {
+    document.querySelectorAll('.settings-nav-item').forEach(i => i.classList.remove('active'));
+    item.classList.add('active');
+  }
+
+  document.querySelectorAll('.toggle').forEach(t => {
+    t.addEventListener('click', function() {
+      this.classList.toggle('off');
+    });
+  });
+
+  const rangeInput = document.querySelector('input[type="range"]');
+  if (rangeInput) {
+    const display = rangeInput.nextElementSibling && rangeInput.parentElement.nextElementSibling;
+    rangeInput.addEventListener('input', function() {
+      const el = document.querySelector('.checkin-step .breathe-count') ||
+                 this.closest('.checkin-step').querySelector('[style*="font-size:28"]');
+      if (el) el.textContent = this.value + ' / 10';
+    });
+  }
+</script>
+</body>
+</html>
